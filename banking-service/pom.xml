@@ -12,10 +12,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
-<<<<<<< HEAD
 
-=======
->>>>>>> 1405d3e023da316ff109057c8f1e3b6c7a61f978
     <dependencies>
         <!-- Spring Boot Starter Data JPA -->
         <dependency>
