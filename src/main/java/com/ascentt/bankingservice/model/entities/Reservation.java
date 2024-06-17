@@ -1,5 +1,6 @@
 package com.ascentt.bankingservice.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -11,6 +12,7 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "property_id", nullable = false)
+    @JsonBackReference
     private Property property;
 
     @Column(nullable = false)
@@ -22,17 +24,7 @@ public class Reservation {
     @Column(nullable = false)
     private String status;
 
-    // Constructor, getters y setters
-
-    public Reservation() {
-    }
-
-    public Reservation(Property property, LocalDate startDate, LocalDate endDate, String status) {
-        this.property = property;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.status = status;
-    }
+    // Getters y Setters
 
     public Long getId() {
         return id;
