@@ -1,104 +1,58 @@
-<<<<<<< HEAD
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.ascentt</groupId>
     <artifactId>bank-api-rest</artifactId>
     <version>1.0-SNAPSHOT</version>
-=======
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.ascentt</groupId>
-    <artifactId>bank-api-rest</artifactId>
-    <version>1.0-SNAPSHOT</version>
-
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <spring.boot.version>2.7.18</spring.boot.version>
     </properties>
-<<<<<<< HEAD
-    <dependencies>
-        <!--  Spring Boot Starter Data JPA  -->
-=======
-
     <dependencies>
         <!-- Spring Boot Starter Data JPA -->
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
             <version>${spring.boot.version}</version>
         </dependency>
-<<<<<<< HEAD
-        <!--  PostgreSQL Driver  -->
-=======
         <!-- PostgreSQL Driver -->
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.18</version>
         </dependency>
-<<<<<<< HEAD
-        <!--  Spring Boot Starter Web  -->
-=======
         <!-- Spring Boot Starter Web -->
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring.boot.version}</version>
         </dependency>
-<<<<<<< HEAD
-        <!--  ModelMapper  -->
-=======
         <!-- ModelMapper -->
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>2.3.5</version>
         </dependency>
-<<<<<<< HEAD
-        <!--  Spring Boot Starter Test  -->
-=======
         <!-- Spring Boot Starter Test -->
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
             <version>${spring.boot.version}</version>
         </dependency>
-<<<<<<< HEAD
-        <!--  Hibernate Validator  -->
-=======
         <!-- Hibernate Validator -->
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>6.2.3.Final</version>
         </dependency>
-<<<<<<< HEAD
-        <!--  Validation API  -->
-=======
         <!-- Validation API -->
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
         </dependency>
-<<<<<<< HEAD
-        <!--  Dependencias para JAXB  -->
-=======
         <!-- Dependencias para JAXB -->
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
@@ -109,47 +63,28 @@
             <artifactId>jaxb-runtime</artifactId>
             <version>2.3.1</version>
         </dependency>
-<<<<<<< HEAD
-        <!--  File Upload  -->
-=======
         <!-- File Upload -->
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
             <version>1.4</version>
         </dependency>
-<<<<<<< HEAD
-        <!--  Spring Boot Starter Thymeleaf (Optional for file upload handling in forms)  -->
-=======
         <!-- Spring Boot Starter Thymeleaf (Optional for file upload handling in forms) -->
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
             <version>${spring.boot.version}</version>
         </dependency>
     </dependencies>
-<<<<<<< HEAD
-    <build>
-        <plugins>
-            <!--  Plugin de Spring Boot  -->
-=======
-
     <build>
         <plugins>
             <!-- Plugin de Spring Boot -->
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.version}</version>
             </plugin>
-<<<<<<< HEAD
-            <!--  Plugin para JAXB  -->
-=======
             <!-- Plugin para JAXB -->
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -161,8 +96,4 @@
             </plugin>
         </plugins>
     </build>
-<<<<<<< HEAD
 </project>
-=======
-</project>
->>>>>>> fb7ba4641730d9c75e88907a3528858827eab91d
