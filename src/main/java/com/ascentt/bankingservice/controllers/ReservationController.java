@@ -1,33 +1,35 @@
 package com.ascentt.bankingservice.controllers;
 
 import com.ascentt.bankingservice.model.dto.ReservationDTO;
-import com.ascentt.bankingservice.model.entities.Reservation;
 import com.ascentt.bankingservice.services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/reservations")
-@Validated
 public class ReservationController {
-
     @Autowired
     private ReservationService reservationService;
 
     @PostMapping
-    public ResponseEntity<Reservation> createReservation(@Valid @RequestBody ReservationDTO reservationDTO) {
-        Reservation reservation = reservationService.createReservation(reservationDTO);
-        return ResponseEntity.ok(reservation);
+    public ResponseEntity<ReservationDTO> createReservation(@RequestBody ReservationDTO reservationDTO) {
+        ReservationDTO createdReservation = reservationService.createReservation(reservationDTO);
+        return ResponseEntity.ok(createdReservation);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Reservation> getReservation(@PathVariable Long id) {
-        Reservation reservation = reservationService.getReservation(id);
-        return ResponseEntity.ok(reservation);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<ReservationDTO>> getReservationsByUser(@PathVariable Long userId) {
+        List<ReservationDTO> reservations = reservationService.getReservationsByUser(userId);
+        return ResponseEntity.ok(reservations);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ReservationDTO> updateReservation(@PathVariable Long id, @RequestBody ReservationDTO reservationDTO) {
+        ReservationDTO updatedReservation = reservationService.updateReservation(id, reservationDTO);
+        return ResponseEntity.ok(updatedReservation);
     }
 
     @DeleteMapping("/{id}")

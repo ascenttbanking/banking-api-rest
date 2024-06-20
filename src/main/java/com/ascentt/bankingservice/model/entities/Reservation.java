@@ -1,6 +1,5 @@
 package com.ascentt.bankingservice.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -12,20 +11,16 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "property_id", nullable = false)
-    @JsonBackReference
     private Property property;
 
-    @Column(nullable = false)
+    private Long userId; // Nuevo campo userId
+
     private LocalDate startDate;
-
-    @Column(nullable = false)
     private LocalDate endDate;
-
-    @Column(nullable = false)
     private String status;
+    private String confirmationNumber;
 
-    // Getters y Setters
-
+    // Getters y setters
     public Long getId() {
         return id;
     }
@@ -40,6 +35,14 @@ public class Reservation {
 
     public void setProperty(Property property) {
         this.property = property;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public LocalDate getStartDate() {
@@ -64,5 +67,13 @@ public class Reservation {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getConfirmationNumber() {
+        return confirmationNumber;
+    }
+
+    public void setConfirmationNumber(String confirmationNumber) {
+        this.confirmationNumber = confirmationNumber;
     }
 }
