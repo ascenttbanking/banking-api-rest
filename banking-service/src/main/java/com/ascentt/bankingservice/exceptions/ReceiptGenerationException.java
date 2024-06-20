@@ -1,6 +1,7 @@
-package com.ascentt.bankservice.exceptions;
+package com.ascentt.bankingservice.exceptions;
 
 public class ReceiptGenerationException extends RuntimeException {
+
     public ReceiptGenerationException(String message) {
         super(message);
     }

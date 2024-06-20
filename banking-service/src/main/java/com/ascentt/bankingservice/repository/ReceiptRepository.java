@@ -1,19 +1,16 @@
+package com.ascentt.bankingservice.repository;
+
+import com.ascentt.bankingservice.model.entities.Receipt;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import java.time.LocalDateTime;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
-
+@Repository
 public interface ReceiptRepository extends JpaRepository<Receipt, Long> {
 
-    //Buscar recibos por rango de fechas
-    @Query("SELECT r FROM Receipt r WHERE r.createdDate BETWEEN :startDate AND :endDate")
-    List<Receipt> findByCreatedDateBetween(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
-
-    //Buscar el último recibo para un usuario o pago
-    @Query("SELECT r FROM Receipt r WHERE r.paymentId = :paymentId ORDER BY r.createdDate DESC")
-    List<Receipt> findLatestByPaymentId(@Param("paymentId") Long paymentId);
+    @Query("SELECT r FROM Receipt r WHERE r.paymentId = :paymentId")
+    List<Receipt> findByPaymentId(@Param("paymentId") String paymentId);
 }
-

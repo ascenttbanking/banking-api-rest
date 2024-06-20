@@ -1,31 +1,31 @@
-package com.ascentt.bankservice.converters;
+package com.ascentt.bankingservice.convertes;
 
-import com.ascentt.bankservice.model.dto.PaymentDto;
-import com.ascentt.bankservice.model.entities.Payment;
+import com.ascentt.bankingservice.model.dto.PaymentDto;
+import com.ascentt.bankingservice.model.entities.Payment;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component
 public class PaymentConverter {
 
-    public static PaymentDto entityToDto(Payment payment) {
-        PaymentDto dto = new PaymentDto();
-        dto.setId(payment.getId());
-        dto.setUserId(payment.getUserId());
-        dto.setAmount(payment.getAmount());
-        dto.setCurrency(payment.getCurrency());
-        dto.setTransactionId(payment.getTransactionId());
-        dto.setStatus(payment.getStatus());
-        dto.setPaymentDate(payment.getPaymentDate());
-        return dto;
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public PaymentDto entityToDto(Payment payment) {
+        return modelMapper.map(payment, PaymentDto.class);
     }
 
-    public static Payment dtoToEntity(PaymentDto dto) {
-        Payment payment = new Payment();
-        payment.setId(dto.getId());
-        payment.setUserId(dto.getUserId());
-        payment.setAmount(dto.getAmount());
-        payment.setCurrency(dto.getCurrency());
-        payment.setTransactionId(dto.getTransactionId());
-        payment.setStatus(dto.getStatus());
-        payment.setPaymentDate(dto.getPaymentDate());
-        return payment;
+    public Payment dtoToEntity(PaymentDto paymentDto) {
+        return modelMapper.map(paymentDto, Payment.class);
+    }
+
+    public List<PaymentDto> entityToDto(List<Payment> payments) {
+        return payments.stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
     }
 }

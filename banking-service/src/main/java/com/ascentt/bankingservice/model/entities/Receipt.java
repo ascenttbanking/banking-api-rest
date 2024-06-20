@@ -1,38 +1,36 @@
-package com.ascentt.bankservice.model.entities;
+package com.ascentt.bankingservice.model.entities;
 
+import lombok.Data;
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Base64;
 
+@Data
 @Entity
+@Table(name = "receipt")
 public class Receipt {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "payment_id", nullable = false)
     private Long paymentId;
-    private byte[] content;  // Assume PDF content
 
-    public Long getId() {
-        return id;
+    @Lob
+    @Column(nullable = false)
+    private byte[] content;
+
+    @Column(name = "created_date", nullable = false)
+    private LocalDateTime createdDate;
+
+    @Transient
+    private String contentBase64;
+
+    @PostLoad
+    @PostPersist
+    @PostUpdate
+    public void convertContentToBase64() {
+        this.contentBase64 = Base64.getEncoder().encodeToString(this.content);
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(Long paymentId) {
-        this.paymentId = paymentId;
-    }
-
-    public byte[] getContent() {
-        return content;
-    }
-
-    public void setContent(byte[] content) {
-        this.content = content;
-    }
-
-
 }

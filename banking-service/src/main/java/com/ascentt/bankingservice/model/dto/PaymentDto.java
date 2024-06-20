@@ -1,7 +1,14 @@
-package com.ascentt.bankservice.model.dto;
+package com.ascentt.bankingservice.model.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PaymentDto {
     private Long id;
     private Long userId;
@@ -10,71 +17,4 @@ public class PaymentDto {
     private String transactionId;
     private String status;
     private LocalDateTime paymentDate;
-
-
-    public PaymentDto(Long id, Long userId, Double amount, String currency, String transactionId, String status, LocalDateTime paymentDate) {
-        this.id = id;
-        this.userId = userId;
-        this.amount = amount;
-        this.currency = currency;
-        this.transactionId = transactionId;
-        this.status = status;
-        this.paymentDate = paymentDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(LocalDateTime paymentDate) {
-        this.paymentDate = paymentDate;
-    }
 }

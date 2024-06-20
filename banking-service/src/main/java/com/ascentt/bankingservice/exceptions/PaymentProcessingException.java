@@ -1,6 +1,7 @@
-package com.ascentt.bankservice.exceptions;
+package com.ascentt.bankingservice.exceptions;
 
 public class PaymentProcessingException extends RuntimeException {
+
     public PaymentProcessingException(String message) {
         super(message);
     }

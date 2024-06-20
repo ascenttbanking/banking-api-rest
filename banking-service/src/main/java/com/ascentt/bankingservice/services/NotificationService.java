@@ -1,18 +1,24 @@
-package com.ascentt.bankservice.services;
+package com.ascentt.bankingservice.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ascentt.bankingservice.model.entities.User;
 import org.springframework.stereotype.Service;
-import com.ascentt.bankservice.model.entities.User;
 
 @Service
 public class NotificationService {
 
-    public void notifyPaymentSuccess(User user, String message) {
-        // Enviar notificación de éxito de pago
-        // Aquí se podría integrar con un sistema de mensajería por email o SMS
-    }
+    // Eliminar o comentar las referencias a JavaMailSender
+    // @Autowired
+    // private JavaMailSender emailSender;
 
-    public void notifyPaymentFailure(User user, String message) {
-        // Enviar notificación de fallo de pago
+    public void sendPaymentConfirmation(User user, String transactionId) {
+        // Eliminar o comentar el cuerpo del método si es necesario
+        // SimpleMailMessage message = new SimpleMailMessage();
+        // message.setTo(user.getEmail());
+        // message.setSubject("Payment Confirmation");
+        // message.setText("Dear " + user.getName() + ",\n\nYour payment with transaction ID " + transactionId + " has been successfully processed.");
+        // emailSender.send(message);
+
+        // Puedes dejar una implementación de prueba o un log
+        System.out.println("Payment confirmation sent to user: " + user.getEmail());
     }
 }

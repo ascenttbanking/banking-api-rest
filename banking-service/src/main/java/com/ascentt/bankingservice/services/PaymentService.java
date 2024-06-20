@@ -1,14 +1,19 @@
-package com.ascentt.bankservice.services;
+package com.ascentt.bankingservice.services;
 
-import com.ascentt.bankservice.model.dto.PaymentDetailsDto;
-import com.ascentt.bankservice.model.dto.PaymentResultDto;
-import com.ascentt.bankservice.model.entities.Payment;
-import com.ascentt.bankservice.repository.PaymentRepository;
+import com.ascentt.bankingservice.convertes.PaymentConverter;
+import com.ascentt.bankingservice.exceptions.PaymentProcessingException;
+import com.ascentt.bankingservice.model.dto.PaymentDto;
+import com.ascentt.bankingservice.model.dto.PaymentResultDto;
+import com.ascentt.bankingservice.model.entities.Payment;
+import com.ascentt.bankingservice.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PaymentService {
@@ -16,36 +21,74 @@ public class PaymentService {
     @Autowired
     private PaymentRepository paymentRepository;
 
-    @Transactional
-    public PaymentResultDto processPayment(PaymentDetailsDto paymentDetails) {
-        Payment payment = new Payment();
-        payment.setUserId(paymentDetails.getUserId());
-        payment.setAmount(paymentDetails.getAmount());
-        payment.setCurrency(paymentDetails.getCurrency());
-        payment.setStatus("processed");  // Default status
-        payment.setPaymentDate(LocalDateTime.now());
+    @Autowired
+    private PaymentConverter paymentConverter;
 
-        payment = paymentRepository.save(payment);
-        return convertToDto(payment);
-    }
-
-    private PaymentResultDto convertToDto(Payment payment) {
-        PaymentResultDto paymentResultDto = new PaymentResultDto();
-        paymentResultDto.setSuccess(true); // Assuming success for the example
-        paymentResultDto.setMessage("Payment processed successfully");
-        paymentResultDto.setTransactionId(String.valueOf(payment.getId())); // Example of generating a transaction ID
-        return paymentResultDto;
-    }
+    @Autowired
+    private ReceiptService receiptService; // Inyección del servicio ReceiptService
 
     @Transactional
-    public PaymentDto processPayment(PaymentDto paymentDto) {
+    public PaymentResultDto processPayment(PaymentDto paymentDto) {
         try {
-            Payment payment = PaymentConverter.dtoToEntity(paymentDto);
-            // Aquí podrías incluir la lógica para interactuar con la pasarela de pagos o cualquier procesamiento necesario.
-            payment = paymentRepository.save(payment);  // Guarda el pago en la base de datos.
-            return PaymentConverter.entityToDto(payment);  // Convierte la entidad guardada de vuelta a DTO para la respuesta.
+            Payment payment = paymentConverter.dtoToEntity(paymentDto);
+            payment.setStatus("PROCESSED");
+            payment.setPaymentDate(LocalDateTime.now());
+            paymentRepository.save(payment);
+
+            PaymentResultDto result = new PaymentResultDto();
+            result.setSuccess(true);
+            result.setMessage("Payment processed successfully");
+            result.setTransactionId(payment.getTransactionId());
+            result.setAmount(payment.getAmount());
+
+            // Generar recibo automáticamente
+            receiptService.generateReceipt(result);
+
+            // Enviar notificación en tiempo real
+            sendRealTimeNotification(result);
+
+            return result;
         } catch (Exception e) {
             throw new PaymentProcessingException("Failed to process payment", e);
         }
+    }
+
+    public List<PaymentDto> getAllPayments() {
+        List<Payment> payments = paymentRepository.findAll();
+        return payments.stream()
+                .map(paymentConverter::entityToDto)
+                .collect(Collectors.toList());
+    }
+
+    public PaymentDto getPaymentById(Long id) {
+        Payment payment = paymentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Payment not found"));
+        return paymentConverter.entityToDto(payment);
+    }
+
+    public PaymentDto updatePayment(Long id, PaymentDto paymentDto) {
+        Payment existingPayment = paymentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Payment not found"));
+
+        existingPayment.setUserId(paymentDto.getUserId());
+        existingPayment.setAmount(paymentDto.getAmount());
+        existingPayment.setCurrency(paymentDto.getCurrency());
+        existingPayment.setTransactionId(paymentDto.getTransactionId());
+        existingPayment.setStatus(paymentDto.getStatus());
+        existingPayment.setPaymentDate(paymentDto.getPaymentDate());
+
+        paymentRepository.save(existingPayment);
+        return paymentConverter.entityToDto(existingPayment);
+    }
+
+    @Transactional
+    public void deletePayment(Long id) {
+        Payment payment = paymentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Payment not found"));
+        paymentRepository.delete(payment);
+    }
+
+    private void sendRealTimeNotification(PaymentResultDto result) {
+        // Implementación para enviar la notificación en tiempo real
     }
 }

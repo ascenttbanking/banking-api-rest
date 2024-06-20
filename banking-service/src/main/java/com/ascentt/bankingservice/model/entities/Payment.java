@@ -1,83 +1,32 @@
-package com.ascentt.bankservice.model.entities;
+package com.ascentt.bankingservice.model.entities;
 
+import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Data
 @Entity
+@Table(name = "payment")
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "user_id", nullable = false)
     private Long userId;
+
+    @Column(nullable = false)
     private Double amount;
+
+    @Column(nullable = false)
     private String currency;
+
+    @Column(name = "transaction_id", nullable = false, unique = true)
     private String transactionId;
-    private String status;  // e.g., "completed", "failed"
+
+    @Column(nullable = false)
+    private String status;
+
+    @Column(name = "payment_date", nullable = false)
     private LocalDateTime paymentDate;
-
-    public Payment(Long id, Long userId, Double amount, String currency, String transactionId, String status, LocalDateTime paymentDate) {
-        this.id = id;
-        this.userId = userId;
-        this.amount = amount;
-        this.currency = currency;
-        this.transactionId = transactionId;
-        this.status = status;
-        this.paymentDate = paymentDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(LocalDateTime paymentDate) {
-        this.paymentDate = paymentDate;
-    }
 }

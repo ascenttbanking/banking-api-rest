@@ -4,11 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentDetailsDto {
-    private Long userId;
-    private Double amount;
-    private String currency;
+public class ReceiptDto {
+    private Long id;
+    private Long paymentId;
+    private String content;
+    private LocalDateTime createdDate;
 }
