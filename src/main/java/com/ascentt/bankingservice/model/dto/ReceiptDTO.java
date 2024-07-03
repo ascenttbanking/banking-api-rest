@@ -14,4 +14,5 @@ public class ReceiptDTO {
     private String transactionId;
     private Double amount;
     private LocalDateTime date;
+    private int userId;
 }

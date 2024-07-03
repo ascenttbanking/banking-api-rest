@@ -21,6 +21,7 @@ public class StripeService {
                         .setMode(SessionCreateParams.Mode.PAYMENT)
                         .setSuccessUrl(domain + "/success")
                         .setCancelUrl(domain + "/cancel")
+                        .setCustomerEmail("customer@example.com")  // Añade un correo electrónico
                         .addLineItem(
                                 SessionCreateParams.LineItem.builder()
                                         .setQuantity(1L)

@@ -15,7 +15,9 @@ public class Receipt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String transactionId;
     private Double amount;
     private LocalDateTime date;
+    private int userId;
 }
