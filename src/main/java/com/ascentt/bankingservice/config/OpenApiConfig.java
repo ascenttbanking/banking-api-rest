@@ -21,4 +21,3 @@ public class OpenApiConfig {
                         .description("Banking API Wiki Documentation")
                         .url("https://springshop.wiki.github.org/docs"));
     }
-}

@@ -1,20 +1,11 @@
-package com.ascentt.bankingservice.model.entities;
+package com.ascentt.bankingservice.model.dto;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
-public class Reservation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "property_id", nullable = false)
-    private Property property;
-
-    private Long userId; // Nuevo campo userId
-
+public class ReservationDTO {
+    private Long id; // Nuevo campo id
+    private Long userId;
+    private Long propertyId;
     private LocalDate startDate;
     private LocalDate endDate;
     private String status;
@@ -29,20 +20,20 @@ public class Reservation {
         this.id = id;
     }
 
-    public Property getProperty() {
-        return property;
-    }
-
-    public void setProperty(Property property) {
-        this.property = property;
-    }
-
     public Long getUserId() {
         return userId;
     }
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(Long propertyId) {
+        this.propertyId = propertyId;
     }
 
     public LocalDate getStartDate() {
