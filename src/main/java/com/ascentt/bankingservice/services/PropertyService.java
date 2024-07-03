@@ -6,9 +6,9 @@ import com.ascentt.bankingservice.repository.PropertyRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,45 +20,45 @@ public class PropertyService {
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private FileStorageService fileStorageService;
-
-    public PropertyDTO addProperty(PropertyDTO propertyDto) {
-        Property property = modelMapper.map(propertyDto, Property.class);
-
-        if (propertyDto.getPhotos() != null) {
-            property.setPhotos(propertyDto.getPhotos().stream()
-                    .map(fileStorageService::storeFile)
-                    .collect(Collectors.joining(", ")));
-        }
-
-        property = propertyRepository.save(property);
-        return modelMapper.map(property, PropertyDTO.class);
+    public PropertyDTO addProperty(PropertyDTO propertyDTO) {
+        Property property = modelMapper.map(propertyDTO, Property.class);
+        Property savedProperty = propertyRepository.save(property);
+        return modelMapper.map(savedProperty, PropertyDTO.class);
     }
 
-    public PropertyDTO updateProperty(Long id, PropertyDTO propertyDto) {
-        Property property = propertyRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Property not found"));
-
-        modelMapper.map(propertyDto, property);
-
-        if (propertyDto.getPhotos() != null) {
-            property.setPhotos(propertyDto.getPhotos().stream()
-                    .map(fileStorageService::storeFile)
-                    .collect(Collectors.joining(", ")));
+    public PropertyDTO updateProperty(Long id, PropertyDTO propertyDTO) {
+        Optional<Property> propertyOptional = propertyRepository.findById(id);
+        if (propertyOptional.isPresent()) {
+            Property property = propertyOptional.get();
+            property.setPrice(propertyDTO.getPrice());
+            property.setRooms(propertyDTO.getRooms());
+            property.setAddress(propertyDTO.getAddress());
+            property.setLocation(propertyDTO.getLocation());
+            property.setSize(propertyDTO.getSize());
+            property.setFeatures(propertyDTO.getFeatures());
+            Property updatedProperty = propertyRepository.save(property);
+            return modelMapper.map(updatedProperty, PropertyDTO.class);
         }
+        return null;
+    }
 
-        property = propertyRepository.save(property);
-        return modelMapper.map(property, PropertyDTO.class);
+    public PropertyDTO getPropertyById(Long id) {
+        Optional<Property> propertyOptional = propertyRepository.findById(id);
+        if (propertyOptional.isPresent()) {
+            return modelMapper.map(propertyOptional.get(), PropertyDTO.class);
+        }
+        return null;
     }
 
     public List<PropertyDTO> getAllProperties() {
-        return propertyRepository.findAll().stream()
+        List<Property> properties = propertyRepository.findAll();
+        return properties.stream()
                 .map(property -> modelMapper.map(property, PropertyDTO.class))
                 .collect(Collectors.toList());
     }
 
     public void deleteProperty(Long id) {
-        propertyRepository.deleteById(id);
+        Optional<Property> propertyOptional = propertyRepository.findById(id);
+        propertyOptional.ifPresent(propertyRepository::delete);
     }
 }
