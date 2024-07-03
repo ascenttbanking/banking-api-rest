@@ -14,6 +14,7 @@ CREATE TABLE cuentas (
 );
 
 CREATE TABLE habitaciones (
+    
                               id SERIAL PRIMARY KEY,
                               nombre VARCHAR(100) NOT NULL,
                               descripcion TEXT,
