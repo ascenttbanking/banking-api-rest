@@ -20,7 +20,7 @@ public class PropertyController {
     @Autowired
     private PropertyService propertyService;
 
-    @PostMapping("/")
+    @PostMapping(value = "/", consumes = "multipart/form-data")
     public ResponseEntity<PropertyDTO> addProperty(
             @RequestParam("price") double price,
             @RequestParam("rooms") int rooms,
@@ -42,7 +42,7 @@ public class PropertyController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProperty);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = "multipart/form-data")
     public ResponseEntity<PropertyDTO> editProperty(
             @PathVariable Long id,
             @RequestParam("price") double price,
