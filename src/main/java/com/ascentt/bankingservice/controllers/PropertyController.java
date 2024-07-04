@@ -20,7 +20,7 @@ public class PropertyController {
     @Autowired
     private PropertyService propertyService;
 
-    @PostMapping(value = "/", consumes = "multipart/form-data")
+    @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<PropertyDTO> addProperty(
             @RequestParam("price") double price,
             @RequestParam("rooms") int rooms,
@@ -65,7 +65,7 @@ public class PropertyController {
         return ResponseEntity.ok(updatedProperty);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<PropertyDTO>> getProperties() {
         List<PropertyDTO> properties = propertyService.getAllProperties();
         return ResponseEntity.ok(properties);
@@ -73,7 +73,11 @@ public class PropertyController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProperty(@PathVariable Long id) {
-        propertyService.deleteProperty(id);
-        return ResponseEntity.ok().build();
+        try {
+            propertyService.deleteProperty(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

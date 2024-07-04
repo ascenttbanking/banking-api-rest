@@ -1,5 +1,7 @@
 package com.ascentt.bankingservice.services;
 
+import com.ascentt.bankingservice.model.dto.UserRequestDTO;
+import com.ascentt.bankingservice.model.dto.UserResponseDTO;
 import com.ascentt.bankingservice.model.entities.User;
 import com.ascentt.bankingservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -46,5 +48,30 @@ public class UserService {
         userRepository.save(user);
         System.out.println("Contraseña actualizada correctamente para: " + email);
         return true;
+    }
+
+    public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
+        if (userRepository.findByEmail(userRequestDTO.getEmail()).isPresent()) {
+            return null;
+        }
+        User user = new User();
+        user.setEmail(userRequestDTO.getEmail());
+        user.setPassword(userRequestDTO.getPassword());
+        user.setUsername(userRequestDTO.getUsername());
+        user = userRepository.save(user);
+        return new UserResponseDTO(user.getId(), user.getEmail(), user.getUsername());
+    }
+
+    public UserResponseDTO editUser(UserRequestDTO userRequestDTO) {
+        Optional<User> userOptional = userRepository.findById(userRequestDTO.getId());
+        if (!userOptional.isPresent()) {
+            return null;
+        }
+        User user = userOptional.get();
+        user.setEmail(userRequestDTO.getEmail());
+        user.setPassword(userRequestDTO.getPassword());
+        user.setUsername(userRequestDTO.getUsername());
+        user = userRepository.save(user);
+        return new UserResponseDTO(user.getId(), user.getEmail(), user.getUsername());
     }
 }

@@ -19,7 +19,7 @@ public class PropertyReviewController {
     @Autowired
     private PropertyReviewService reviewService;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<PropertyReviewDTO> addReview(@Valid @RequestBody PropertyReviewDTO reviewDTO) {
         try {
             PropertyReviewDTO savedReview = reviewService.addReview(reviewDTO);

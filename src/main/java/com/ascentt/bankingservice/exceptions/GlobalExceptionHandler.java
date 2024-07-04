@@ -1,4 +1,4 @@
-package com.ascentt.bankservice.exception;
+package com.ascentt.bankingservice.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

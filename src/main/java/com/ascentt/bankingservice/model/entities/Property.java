@@ -1,28 +1,26 @@
 package com.ascentt.bankingservice.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class Property {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private double price;
-    private int rooms;
-    private String address;
     private String location;
     private int size;
     private String features;
     private String photos;
+    private int rooms;
+    private String address;
 
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     private List<Reservation> reservations;
 
-    // Getters y Setters
+    // Getters and Setters
 
     public Long getId() {
         return id;
@@ -38,22 +36,6 @@ public class Property {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public int getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(int rooms) {
-        this.rooms = rooms;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getLocation() {
@@ -86,6 +68,22 @@ public class Property {
 
     public void setPhotos(String photos) {
         this.photos = photos;
+    }
+
+    public int getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(int rooms) {
+        this.rooms = rooms;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public List<Reservation> getReservations() {
